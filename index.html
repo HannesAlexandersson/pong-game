@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pong Game</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+    }
+    .left-side {
+      display: inline-block;
+      float: left;
+      width: 80%;
+    }
+    .right-side {
+      display: inline-block;
+      float: right;
+      width: 20%;
+    }
+  </style>
+</head>
+<body>
+  <audio id="paddleHitSound" src="pongHit.mp3"></audio>
+  <audio id="scoreSound" src="score.mp3"></audio>
+  <div class="left-side">
+  <canvas id="pongCanvas" width="800" height="600"></canvas>
+  <script src="pong.js"></script>
+  </div>
+  <div class="right-side">
+    <span>Player 1: <span id="scorePlayer1">0</span></span>
+    <span>Player 2: <span id="scorePlayer2">0</span></span>
+  </div>
+  <button id="resetButton" onclick="resetMatch()">Reset Match</button>
+  <button id="instructionsButton" onclick="showInstructions()">Instructions</button>
+  <button id="muteButton" onclick="toggleMute()">Mute Sound</button>
+  <script>
+    function showInstructions() {
+      // Open a popup window with instructions
+      var instructionsWindow = window.open("", "Instructions", "width=700,height=500");
+      
+      // instructions to inside the popup window
+      instructionsWindow.document.write("<h2>Instructions:</h2>");
+      instructionsWindow.document.write("<p>Player 1 controls: W (up), S (down)</p>");
+      instructionsWindow.document.write("<p>Player 2 controls: Arrow Up (up), Arrow Down (down)</p>");
+      instructionsWindow.document.write("<p>Hit the ball with the paddles to score points. Avoid missing the ball! Easy peasy lemon squezy</p>");
+    }
+    
+    var isMuted = false;
+
+    function toggleMute() {
+      isMuted = !isMuted;
+
+      var muteButton = document.getElementById("muteButton");
+
+      if (isMuted) {
+        // If the game is muted, set the volume to 0
+        paddleHitSound.volume = 0;
+        scoreSound.volume = 0;
+        muteButton.innerText = "Unmute";
+      } else {
+        // If the game is unmuted, set the volume back to 1
+        paddleHitSound.volume = 1;
+        scoreSound.volume = 1;
+        muteButton.innerText = "Mute";
+      }
+    }
+  </script>
+</body>
+</html>
